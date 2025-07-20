@@ -2,18 +2,18 @@ const { GraphQLError } = require('graphql');
 
 const authMiddleware = (resolve) => {
   return async (parent, args, context, info) => {
-    // في وضع التطوير بدون قاعدة بيانات، نتجاهل المصادقة
-    if (process.env.NODE_ENV === 'development' && !context.user) {
-      console.log('🔓 Development mode: Skipping authentication');
-      // إنشاء مستخدم وهمي للتجربة
-      context.user = { id: '1', username: 'testuser' };
-    }
-    
+    // التحقق من وجود المستخدم في السياق
     if (!context.user) {
-      throw new GraphQLError('You must be logged in', {
-        extensions: { code: 'UNAUTHENTICATED' }
+      console.log('❌ Authentication required but no user found in context');
+      throw new GraphQLError('You must be logged in to access this resource', {
+        extensions: { 
+          code: 'UNAUTHENTICATED',
+          statusCode: 401
+        }
       });
     }
+    
+    console.log(`✅ Authenticated user: ${context.user.id}`);
     return resolve(parent, args, context, info);
   };
 };
