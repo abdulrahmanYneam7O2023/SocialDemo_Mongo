@@ -7,14 +7,16 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest --detectOpenHandles",
-    "seed": "node src/seed/seedData.js"
+    "seed": "node src/seed/seedData.js",
+    "seed-enhanced": "node enhanced-seed.js",
+    "check-db": "node check-database.js"
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
-    "@faker-js/faker": "^9.0.3",
-    "@graphql-tools/load-files": "^6.2.7",
-    "@graphql-tools/merge": "^6.2.5",
-    "@graphql-tools/utils": "^6.2.4",
+    "@faker-js/faker": "^9.9.0",
+    "@graphql-tools/load-files": "^7.0.0",
+    "@graphql-tools/merge": "^9.0.0",
+    "@graphql-tools/utils": "^10.0.0",
     "apollo-server-express": "^3.13.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -24,7 +26,11 @@
     "graphql-depth-limit": "^1.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
-    "winston": "^3.14.2"
+    "node-fetch": "^2.7.0",
+    "winston": "^3.14.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",

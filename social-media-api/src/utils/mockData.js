@@ -267,7 +267,7 @@ class MockDatabase {
   }
 
   updatePost(id, postData) {
-    const postIndex = this.posts.findIndex(post => post.id === id);
+    const postIndex = this.posts.findIndex(post => post.id === id || post.contentId === id);
     if (postIndex === -1) return null;
     
     this.posts[postIndex] = { ...this.posts[postIndex], ...postData };
@@ -275,7 +275,7 @@ class MockDatabase {
   }
 
   deletePost(id) {
-    const postIndex = this.posts.findIndex(post => post.id === id);
+    const postIndex = this.posts.findIndex(post => post.id === id || post.contentId === id);
     if (postIndex === -1) return false;
     
     this.posts.splice(postIndex, 1);

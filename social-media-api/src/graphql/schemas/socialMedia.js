@@ -20,6 +20,13 @@ input PostInput {
   author: String
 }
 
+input PostUpdateInput {
+  platform: String
+  contentType: String
+  content: String
+  author: String
+}
+
 input PostFilterInput {
   createdAt: DateFilter
   likes: IntFilter
@@ -54,7 +61,7 @@ type Query {
 
 type Mutation {
   addPost(input: PostInput!): SocialMediaPost!
-  updatePost(id: ID!, input: PostInput!): SocialMediaPost!
+  updatePost(id: ID!, input: PostUpdateInput!): SocialMediaPost!
   deletePost(id: ID!): Boolean!
 }
 `;

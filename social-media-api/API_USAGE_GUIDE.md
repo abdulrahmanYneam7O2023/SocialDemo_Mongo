@@ -9,40 +9,7 @@
 
 ---
 
-## 1. Authentication Routes (REST API)
-
-### تسجيل مستخدم جديد
-```http
-POST http://localhost:4000/auth/register
-Content-Type: application/json
-
-{
-  "username": "ahmed_test",
-  "email": "ahmed@test.com",
-  "password": "password123"
-}
-```
-
-### تسجيل الدخول
-```http
-POST http://localhost:4000/auth/login
-Content-Type: application/json
-
-{
-  "email": "ahmed@example.com",
-  "password": "password123"
-}
-```
-
-**ملاحظة**: المستخدمون الوهميون:
-- ahmed@example.com (password: password123)
-- sara@example.com (password: password123)
-- omar@example.com (password: password123)
-- fatima@example.com (password: password123)
-
----
-
-## 2. GraphQL Queries
+## 1. GraphQL Queries
 
 ### أ) الحصول على جميع المنشورات
 ```graphql
@@ -143,7 +110,7 @@ query {
 
 ---
 
-## 3. GraphQL Mutations
+## 2. GraphQL Mutations
 
 ### أ) إضافة منشور جديد
 ```graphql
@@ -187,7 +154,7 @@ mutation {
 
 ---
 
-## 4. استعلامات متقدمة مع فلترة
+## 3. استعلامات متقدمة مع فلترة
 
 ### أ) فلترة حسب الإعجابات
 ```graphql
@@ -226,7 +193,7 @@ query {
 
 ---
 
-## 5. البيانات الوهمية المتاحة
+## 4. البيانات الوهمية المتاحة
 
 ### المستخدمون:
 - Ahmed Hassan (ahmed@example.com)
@@ -252,51 +219,33 @@ query {
 
 ---
 
-## 6. اختبار سريع
+## 5. اختبار سريع
 
 ### تجربة في GraphQL Playground:
 1. افتح http://localhost:4000
 2. انسخ والصق أي من الاستعلامات أعلاه
 3. اضغط على زر "Play" ▶️
-
-### تجربة Authentication:
-1. استخدم Postman أو curl
-2. سجل دخول باستخدام ahmed@example.com / password123
-3. انسخ الـ token
-4. استخدمه في رأس Authorization: Bearer [token]
+4. **لا حاجة للمصادقة!** جميع الاستعلامات تعمل مباشرة
 
 ---
 
-## 7. ملاحظات مهمة
+## 6. ملاحظات مهمة
 
-- 🔓 **وضع التطوير**: Authentication مبسط للاختبار
+- 🔓 **بدون مصادقة**: المشروع يعمل بدون أي متطلبات مصادقة
 - 📝 **بيانات وهمية**: جميع البيانات في الذاكرة (ستختفي عند إعادة التشغيل)
-- 🚀 **إضافة بيانات**: يمكنك إضافة منشورات ومستخدمين جدد
+- 🚀 **إضافة بيانات**: يمكنك إضافة منشورات جدد باستخدام mutations
 - 🔄 **إعادة التشغيل**: البيانات ترجع للحالة الأساسية عند إعادة تشغيل الخادم
 
 ---
 
-## 8. كود المثال - JavaScript
+## 7. كود المثال - JavaScript
 
 ```javascript
-// تسجيل الدخول
-const loginResponse = await fetch('http://localhost:4000/auth/login', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    email: 'ahmed@example.com',
-    password: 'password123'
-  })
-});
-
-const { token } = await loginResponse.json();
-
-// استعلام GraphQL
+// استعلام GraphQL بسيط (بدون مصادقة)
 const graphqlResponse = await fetch('http://localhost:4000/graphql', {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
     query: `
@@ -314,6 +263,33 @@ const graphqlResponse = await fetch('http://localhost:4000/graphql', {
 
 const data = await graphqlResponse.json();
 console.log(data);
+
+// إضافة منشور جديد
+const addPostResponse = await fetch('http://localhost:4000/graphql', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    query: `
+      mutation {
+        addPost(input: {
+          platform: "Twitter"
+          contentType: "TWEET"
+          content: "منشور جديد! 🎉"
+          author: "test_user"
+        }) {
+          id
+          content
+          platform
+        }
+      }
+    `
+  })
+});
+
+const newPost = await addPostResponse.json();
+console.log(newPost);
 ```
 
 ---

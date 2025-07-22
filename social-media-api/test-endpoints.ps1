@@ -5,10 +5,11 @@ Write-Host "🚀 بدء اختبار الـ Endpoints..." -ForegroundColor Green
 # 1. اختبار الصفحة الرئيسية
 Write-Host "`n1. اختبار الصفحة الرئيسية..." -ForegroundColor Yellow
 try {
-    $home = Invoke-RestMethod -Uri "http://localhost:4000/" -Method GET
+    $homeResponse = Invoke-RestMethod -Uri "http://localhost:4000/" -Method GET
     Write-Host "✅ الصفحة الرئيسية تعمل!" -ForegroundColor Green
-    Write-Host "Message: $($home.message)" -ForegroundColor Cyan
-} catch {
+    Write-Host "Message: $($homeResponse.message)" -ForegroundColor Cyan
+}
+catch {
     Write-Host "❌ خطأ في الصفحة الرئيسية: $($_.Exception.Message)" -ForegroundColor Red
 }
 
@@ -16,7 +17,7 @@ try {
 Write-Host "`n2. اختبار تسجيل الدخول..." -ForegroundColor Yellow
 try {
     $loginBody = @{
-        email = "ahmed@example.com"
+        email = "user1@example.com"
         password = "password123"
     } | ConvertTo-Json
 
@@ -27,8 +28,8 @@ try {
     
     # حفظ التوكن للاختبارات التالية
     $global:authToken = $loginResult.token
-    
-} catch {
+}
+catch {
     Write-Host "❌ خطأ في تسجيل الدخول: $($_.Exception.Message)" -ForegroundColor Red
     return
 }
@@ -57,8 +58,8 @@ try {
         Write-Host "  - المحتوى: $($firstPost.content.Substring(0, [Math]::Min(50, $firstPost.content.Length)))..." -ForegroundColor White
         Write-Host "  - الإعجابات: $($firstPost.likes)" -ForegroundColor White
     }
-    
-} catch {
+}
+catch {
     Write-Host "❌ خطأ في GraphQL: $($_.Exception.Message)" -ForegroundColor Red
 }
 
@@ -66,7 +67,7 @@ try {
 Write-Host "`n4. اختبار إضافة منشور جديد..." -ForegroundColor Yellow
 try {
     $addPostMutation = @{
-        query = 'mutation { addPost(input: { platform: "Twitter", contentType: "TWEET", content: "منشور تجريبي جديد! 🚀 #تطوير #PowerShell" }) { id content platform likes author createdBy { username } } }'
+        query = 'mutation { addPost(input: { platform: "Twitter", contentType: "TWEET", content: "منشور تجريبي جديد! 🚀" }) { id content platform likes author createdBy { username } } }'
     } | ConvertTo-Json
 
     $addPostResult = Invoke-RestMethod -Uri "http://localhost:4000/graphql" -Method POST -Headers $headers -Body $addPostMutation
@@ -80,8 +81,8 @@ try {
         Write-Host "  - المنصة: $($newPost.platform)" -ForegroundColor White
         Write-Host "  - المؤلف: $($newPost.createdBy.username)" -ForegroundColor White
     }
-    
-} catch {
+}
+catch {
     Write-Host "❌ خطأ في إضافة المنشور: $($_.Exception.Message)" -ForegroundColor Red
 }
 
@@ -102,8 +103,8 @@ try {
         Write-Host "  - الإيميل: $($user.email)" -ForegroundColor White
         Write-Host "  - تاريخ الإنشاء: $($user.createdAt)" -ForegroundColor White
     }
-    
-} catch {
+}
+catch {
     Write-Host "❌ خطأ في استعلام المستخدم: $($_.Exception.Message)" -ForegroundColor Red
 }
 
