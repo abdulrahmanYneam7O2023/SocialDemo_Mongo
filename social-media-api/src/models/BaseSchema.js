@@ -123,7 +123,7 @@ BaseSchema.index({ tenant: 1, isDeleted: 1, status: 1 });
 BaseSchema.index({ tenant: 1, isArchived: 1, status: 1 });
 BaseSchema.index({ tenant: 1, createdAt: -1 });
 BaseSchema.index({ tenant: 1, tags: 1 });
-BaseSchema.index({ uuid: 1 }, { unique: true });
+// UUID index is already defined in field definition with unique: true
 
 // Methods for soft delete
 BaseSchema.methods.softDelete = function(deletedBy) {

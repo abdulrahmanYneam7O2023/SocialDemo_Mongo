@@ -1,7 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { SocialContent, SocialAnalytics } = require('../models/SocialContent');
-const { User } = require('../models/User');
+const { SocialContent, SocialAnalytics } = require('../models/SocialMediaModels');
 const { faker } = require('@faker-js/faker');
 const connectDB = require('../config/db');
 

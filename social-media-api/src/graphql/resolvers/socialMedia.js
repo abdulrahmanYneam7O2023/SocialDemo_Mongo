@@ -1,4 +1,4 @@
-const { SocialContent } = require('../../models/SocialContent');
+const { SocialContent } = require('../../models/SocialMediaModels');
 const { handleError } = require('../../utils/errorHandler');
 const { mockDB } = require('../../utils/mockData');
 

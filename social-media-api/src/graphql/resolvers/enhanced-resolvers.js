@@ -1,6 +1,5 @@
-const { SocialContent } = require('../../models/SocialContent');
+const { SocialContent, SocialAnalytics } = require('../../models/SocialMediaModels');
 const { User } = require('../../models/User');
-const { SocialAnalytics } = require('../../models/SocialAnalytics');
 const { handleError } = require('../../utils/errorHandler');
 const { authMiddleware } = require('../../middleware/auth');
 const mongoose = require('mongoose');

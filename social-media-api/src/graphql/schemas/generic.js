@@ -272,8 +272,9 @@ type ModelInfo {
 }
 
 type AvailableModelsResult {
-  models: [ModelInfo!]!
   success: Boolean!
+  totalModels: Int!
+  models: [ModelInfo!]!
 }
 
 # ================================================================

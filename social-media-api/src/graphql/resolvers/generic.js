@@ -55,14 +55,17 @@ const genericResolvers = {
       try {
         const { MODEL_REGISTRY } = require('../../utils/genericQuery');
         
+        const models = Object.keys(MODEL_REGISTRY).map(modelName => ({
+          name: modelName,
+          description: getModelDescription(modelName),
+          searchableFields: getModelSearchableFields(modelName),
+          filterableFields: getModelFilterableFields(modelName)
+        }));
+        
         return {
-          models: Object.keys(MODEL_REGISTRY).map(modelName => ({
-            name: modelName,
-            description: getModelDescription(modelName),
-            searchableFields: getModelSearchableFields(modelName),
-            filterableFields: getModelFilterableFields(modelName)
-          })),
-          success: true
+          success: true,
+          totalModels: models.length,
+          models
         };
         
       } catch (error) {
@@ -128,9 +131,7 @@ const genericResolvers = {
       }
     },
     
-    /**
-     * إنشاء محتوى سوشيال ميديا (مخصص)
-     */
+    
     createSocialContent: async (parent, { input }, context) => {
       try {
         const userId = context?.user?.id || null;

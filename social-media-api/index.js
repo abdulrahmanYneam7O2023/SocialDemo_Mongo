@@ -4,6 +4,7 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const { connectDB, checkDatabaseConnection } = require('./src/config/db');
 const { typeDefs, resolvers } = require('./src/graphql');
 const logger = require('./src/utils/logger');
@@ -74,6 +75,8 @@ const startServer = async () => {
     // إضافة GraphQL middleware إلى Express (بدون مصادقة)
     app.use('/graphql', expressMiddleware(server));
 
+    // Database connection is already handled by connectDB() above
+    
     // تشغيل السيرفر
             const PORT = process.env.PORT || 4000;
         app.listen(PORT, () => {

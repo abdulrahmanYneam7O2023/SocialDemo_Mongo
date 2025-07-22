@@ -6,7 +6,10 @@ const MODEL_REGISTRY = {
   'SocialContent': () => require('../models/SocialMediaModels').SocialContent,
   'SocialConnection': () => require('../models/SocialMediaModels').SocialConnection,
   'SocialAnalytics': () => require('../models/SocialMediaModels').SocialAnalytics,
-  'User': () => require('../models/User').User
+  'User': () => require('../models/User').User,
+  'SocialContent': () => require('../models/SocialMediaModels').SocialContent,
+  'SocialConnection': () => require('../models/SocialMediaModels').SocialConnection,
+  'SocialAnalytics': () => require('../models/SocialMediaModels').SocialAnalytics
 };
 
 /**

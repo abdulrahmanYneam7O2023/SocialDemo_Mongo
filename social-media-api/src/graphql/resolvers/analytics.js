@@ -1,4 +1,4 @@
-const { SocialAnalytics } = require('../../models/SocialAnalytics');
+const { SocialAnalytics } = require('../../models/SocialMediaModels');
 const { mockDB } = require('../../utils/mockData');
 
 const analyticsResolvers = {
